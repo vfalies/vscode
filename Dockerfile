@@ -1,4 +1,4 @@
-FROM php:7.2.1-stretch
+FROM vfac/envdevphpbase:7.2
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -68,7 +68,7 @@ RUN code --install-extension felixfbecker.php-intellisense \
 		 --install-extension ikappas.phpcs \
 		 --install-extension whatwedo.twig \
 		 --install-extension bajdzis.vscode-twig-pack
-
+		 
 WORKDIR ${HOME}
 
 ENTRYPOINT [ "/usr/local/bin/start.sh" ]
