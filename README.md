@@ -30,13 +30,13 @@ This container is based on X11 sharing that's why it is usable only on system us
 
 To run the container, you can use the script given:
 
-```
+```shell
 ./vscode
 ```
 
 or use the complete command line instruction
 
-```
+```shell
 docker run \
     -ti \
     --rm \
