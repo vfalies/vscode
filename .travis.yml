@@ -1,0 +1,19 @@
+sudo: required
+
+services: 
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+before_install:
+  - docker --version
+
+  - docker build -t vfac/vscode .
+  - docker build -t vfac/vscode-php .
+
+script:
+  - docker run --rm vfac/vscode -v
+  - docker run --rm vfac/vscode-php -v
