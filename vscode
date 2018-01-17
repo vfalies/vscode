@@ -6,7 +6,7 @@ docker run \
     -d --device /dev/dri \
     -v /tmp/.X11-unix:/tmp/.X11-unix  \
     -v $HOME:/home/developer \
-    -v $PWD:/var/www/html \
+    -v $PWD:/app/ \
     --env DISPLAY=unix$DISPLAY  \
     --name vscode  \
     --net="host"  \

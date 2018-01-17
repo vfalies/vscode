@@ -15,5 +15,5 @@ before_install:
   - docker build -t vfac/vscode-php .
 
 script:
-  - docker run --rm -ti --entrypoint /usr/bin/code vfac/vscode -v
-  - docker run --rm -ti --entrypoint /usr/bin/code vfac/vscode-php -v
+  - docker run --rm -ti vfac/vscode -v
+  - docker run --rm -ti vfac/vscode-php -v

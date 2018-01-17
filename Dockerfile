@@ -46,9 +46,6 @@ RUN useradd --create-home --home-dir $HOME developer \
     && mkdir /var/www/html -p \
 	&& chown -R developer:developer $HOME /var/www/html
 
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod 755 /usr/local/bin/start.sh
-
 RUN mkdir -p $HOME/.vscode/extensions $HOME/.config/Code/User && \
     touch $HOME/.config/Code/storage.json && \
     chown -R developer:developer ${HOME}
@@ -68,7 +65,7 @@ RUN code --install-extension felixfbecker.php-intellisense \
 		 --install-extension ikappas.phpcs \
 		 --install-extension whatwedo.twig \
 		 --install-extension bajdzis.vscode-twig-pack
-		 
-WORKDIR ${HOME}
 
-ENTRYPOINT [ "/usr/local/bin/start.sh" ]
+WORKDIR /app
+
+ENTRYPOINT [ "/usr/bin/code", "/app" ]
