@@ -68,4 +68,4 @@ RUN code --install-extension felixfbecker.php-intellisense \
 
 WORKDIR /app
 
-ENTRYPOINT [ "/usr/bin/code", "/app" ]
+ENTRYPOINT [ "/usr/share/code/code", "/app" ]
