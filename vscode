@@ -5,7 +5,7 @@ docker run \
     --rm \
     -d --device /dev/dri \
     -v /tmp/.X11-unix:/tmp/.X11-unix  \
-    -v $HOME:/home/developer \
+    -v $HOME:/home/vfac \
     -v $PWD:/app/ \
     --env DISPLAY=unix$DISPLAY  \
     --name vscode  \

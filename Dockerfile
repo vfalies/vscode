@@ -41,16 +41,16 @@ RUN apt-get update && apt-get -y install \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV HOME /home/developer
-RUN useradd --create-home --home-dir $HOME developer \
+ENV HOME /home/vfac
+RUN useradd --create-home --home-dir $HOME vfac \
     && mkdir /var/www/html -p \
-	&& chown -R developer:developer $HOME /var/www/html
+	&& chown -R vfac:vfac $HOME /var/www/html
 
 RUN mkdir -p $HOME/.vscode/extensions $HOME/.config/Code/User && \
     touch $HOME/.config/Code/storage.json && \
-    chown -R developer:developer ${HOME}
+    chown -R vfac:vfac ${HOME}
 
-USER developer
+USER vfac
 RUN code --install-extension felixfbecker.php-intellisense \
 		 --install-extension annsk.alignment \
 		 --install-extension HookyQR.beautify \
@@ -68,4 +68,4 @@ RUN code --install-extension felixfbecker.php-intellisense \
 
 WORKDIR /app
 
-ENTRYPOINT [ "/usr/share/code/code", "/app" ]
+ENTRYPOINT [ "/usr/bin/code", "/app" ]
