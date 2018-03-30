@@ -1,8 +1,9 @@
-FROM vfac/envdevphpbase:7.2
+FROM vfac/envdevphpbase:7.2-cli
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
+USER root
 RUN apt-get update && apt-get install -y \
 	apt-transport-https \
 	ca-certificates \
@@ -42,9 +43,6 @@ RUN apt-get update && apt-get -y install \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV HOME /home/vfac
-RUN useradd --create-home --home-dir $HOME vfac \
-    && mkdir /var/www/html -p \
-	&& chown -R vfac:vfac $HOME /var/www/html
 
 RUN mkdir -p $HOME/.vscode/extensions $HOME/.config/Code/User && \
     touch $HOME/.config/Code/storage.json && \
