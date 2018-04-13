@@ -1,15 +1,25 @@
-FROM vfac/envdevphpbase:7.2-cli
-LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
+# Visual Studio Code in a container
+#	NOTE: Needs the redering device (yeah... idk)
+#
+# docker run -d \
+#    -v /tmp/.X11-unix:/tmp/.X11-unix \
+#    -v $HOME:/home/user \
+#    -e DISPLAY=unix$DISPLAY \
+#    --device /dev/dri \
+#    --name vscode \
+#    vscode
 
+FROM debian:buster
+LABEL maintainer "Vincent Faliès <vincent@vfac.fr>"
+
+# Tell debconf to run in non-interactive mode
 ENV DEBIAN_FRONTEND noninteractive
 
-USER root
 RUN apt-get update && apt-get install -y \
 	apt-transport-https \
 	ca-certificates \
 	curl \
 	gnupg \
-    git \
 	--no-install-recommends
 
 # Add the vscode debian repo
@@ -18,6 +28,7 @@ RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable ma
 
 RUN apt-get update && apt-get -y install \
 	code \
+	git \
 	libasound2 \
 	libatk1.0-0 \
 	libcairo2 \
@@ -38,32 +49,15 @@ RUN apt-get update && apt-get -y install \
 	libxrender1 \
 	libxss1 \
 	libxtst6 \
-    nodejs \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV HOME /home/vfac
+ENV HOME /home/user
+RUN useradd --create-home --home-dir $HOME user \
+	&& chown -R user:user $HOME
 
-RUN mkdir -p $HOME/.vscode/extensions $HOME/.config/Code/User && \
-    touch $HOME/.config/Code/storage.json && \
-    chown -R vfac:vfac ${HOME}
+COPY start.sh /usr/local/bin/start.sh
 
-USER vfac
-RUN code --install-extension felixfbecker.php-intellisense \
-		 --install-extension annsk.alignment \
-		 --install-extension HookyQR.beautify \
-		 --install-extension patrys.vscode-code-outline \
-		 --install-extension PeterJausovec.vscode-docker \
-		 --install-extension dbaeumer.jshint \
-		 --install-extension DavidAnson.vscode-markdownlint \
-		 --install-extension makao.phpcsfixer \
-		 --install-extension felixfbecker.php-debug \
-		 --install-extension neilbrayfield.php-docblocker \
-		 --install-extension felixfbecker.php-pack \
-		 --install-extension ikappas.phpcs \
-		 --install-extension whatwedo.twig \
-		 --install-extension bajdzis.vscode-twig-pack
+WORKDIR $HOME
 
-WORKDIR /app
-
-ENTRYPOINT [ "/usr/bin/code", "/app" ]
+CMD [ "start.sh" ]
